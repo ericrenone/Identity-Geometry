@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Novelty Functional - Real-Time Popout Visualization
-===================================================
+Novelty Functional - Real-Time 3D Popout Visualization
+======================================================
 
-Version: 1.1.0
+Version: 1.2.0
 
 This script computes novelty functional for a toy LLM dataset
 and dynamically visualizes KL, Fisher trace, and novelty scores
-in a live popout simulation.
+in a live 3D popout simulation.
 
 Dependencies:
 - torch
@@ -20,6 +20,7 @@ import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import List, Optional, Dict
@@ -121,9 +122,9 @@ class NoveltyFunctional:
         }
 
 # -----------------------------
-# Real-Time Popout Simulation
+# Real-Time 3D Popout Simulation
 # -----------------------------
-def run_real_time_simulation(texts: List[str], model_name="gpt2", seed_base=123):
+def run_real_time_simulation_3d(texts: List[str], model_name="gpt2", seed_base=123):
     torch.manual_seed(seed_base)
     random.seed(seed_base)
 
@@ -131,24 +132,28 @@ def run_real_time_simulation(texts: List[str], model_name="gpt2", seed_base=123)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     nf = NoveltyFunctional()
 
-    # Storage for results
     kl_scores = [0]*len(texts)
     fisher_scores = [0]*len(texts)
     novelty_scores = [0]*len(texts)
 
-    fig, ax = plt.subplots(figsize=(12, 6))
-    bars_novelty = ax.bar(range(len(texts)), novelty_scores, color='teal', label='Novelty')
-    bars_kl = ax.bar(range(len(texts)), kl_scores, color='orange', alpha=0.5, label='KL')
-    bars_fisher = ax.bar(range(len(texts)), fisher_scores, color='purple', alpha=0.5, label='Fisher')
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111, projection='3d')
 
-    ax.set_xticks(range(len(texts)))
+    xpos = range(len(texts))
+    ypos = [0]*len(texts)
+    zpos = [0]*len(texts)
+    dx = [0.3]*len(texts)
+    dy = [0.3]*len(texts)
+    dz = novelty_scores
+
+    bars = ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color='teal', alpha=0.8)
+    ax.set_xticks(xpos)
     ax.set_xticklabels([t[:20]+"..." if len(t)>20 else t for t in texts], rotation=45, ha='right')
-    ax.set_ylabel("Scores")
-    ax.set_title("Real-Time Novelty Functional Simulation")
-    ax.legend()
+    ax.set_ylabel('Score Type')
+    ax.set_zlabel('Value')
+    ax.set_title("Real-Time 3D Novelty Functional Simulation")
 
     def update(frame):
-        # Dynamic seeding
         seed = seed_base + frame
         torch.manual_seed(seed)
         random.seed(seed)
@@ -158,25 +163,28 @@ def run_real_time_simulation(texts: List[str], model_name="gpt2", seed_base=123)
         fisher_scores[frame] = result['fisher_trace']
         novelty_scores[frame] = result['novelty_score']
 
-        # Clear and redraw bars
-        ax.clear()
-        ax.bar(range(len(texts)), novelty_scores, color='teal', label='Novelty')
-        ax.bar(range(len(texts)), kl_scores, color='orange', alpha=0.5, label='KL')
-        ax.bar(range(len(texts)), fisher_scores, color='purple', alpha=0.5, label='Fisher')
+        ax.cla()
+        dz_novelty = novelty_scores
+        dz_kl = kl_scores
+        dz_fisher = fisher_scores
 
-        ax.set_xticks(range(len(texts)))
+        ax.bar3d(xpos, ypos, zpos, dx, dy, dz_novelty, color='teal', label='Novelty', alpha=0.8)
+        ax.bar3d(xpos, [y+0.35 for y in ypos], zpos, dx, dy, dz_kl, color='orange', label='KL', alpha=0.6)
+        ax.bar3d(xpos, [y+0.7 for y in ypos], zpos, dx, dy, dz_fisher, color='purple', label='Fisher', alpha=0.6)
+
+        ax.set_xticks(xpos)
         ax.set_xticklabels([t[:20]+"..." if len(t)>20 else t for t in texts], rotation=45, ha='right')
-        ax.set_ylabel("Scores")
-        ax.set_title("Real-Time Novelty Functional Simulation")
+        ax.set_ylabel('Score Type Offset')
+        ax.set_zlabel('Value')
+        ax.set_title("Real-Time 3D Novelty Functional Simulation")
+        ax.set_zlim(0, max(max(novelty_scores)*1.2, 1))
         ax.legend()
-        ax.set_ylim(0, max(max(novelty_scores)*1.2, 1))
 
         print(f"[{frame+1}/{len(texts)}] Text: {texts[frame][:50]}... | Novelty: {result['novelty_score']:.4f}")
 
     ani = FuncAnimation(fig, update, frames=len(texts), repeat=False, interval=1000)
     plt.show()
 
-    # Summary
     print("\n--- Final Summary ---")
     for i, t in enumerate(texts):
         print(f"Text: {t[:50]}...")
@@ -195,4 +203,4 @@ if __name__ == "__main__":
         "Once upon a time, magic filled the air.",
         "Data science is transforming the world rapidly."
     ]
-    run_real_time_simulation(toy_dataset)
+    run_real_time_simulation_3d(toy_dataset)
