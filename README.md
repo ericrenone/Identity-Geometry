@@ -2,9 +2,7 @@
 
 ## Core
 
-This repository implements a **real-time, research-grade novelty functional** for Large Language Models (LLMs).  
-
-The functional combines:
+This repository implements a **real-time, research-grade novelty functional** for Large Language Models (LLMs):
 
 1. **KL Divergence vs Uniform** – measures the model's prediction confidence.  
 2. **Diagonal Fisher Trace** – measures parameter sensitivity to input.  
