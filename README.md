@@ -24,3 +24,14 @@ This design serves as a **hardware-software co-design benchmark**, aligning with
 
 ---
 
+# FPGA-Based Real-Time Processing: Key Takeaways
+
+## 1. Hardware vs. Software Performance
+- **Zero-Latency Compute:** FPGA achieves ~37.037 ns/clock cycle, effectively zero latency.
+- **Absolute Determinism:** 100% determinism with jitter < 0.5µs; software is OS-dependent and non-deterministic.
+- **I/O-Bound:** UART transport (~86.8µs) is the bottleneck, not computation.
+
+## 2. Neuromorphic Logic ("Silicon Brain")
+- **Leaky Integrator Model:** Implements `energy_acc = energy_acc + (input * weight) - (energy_acc >> 1)` for temporal memory.
+- **Novelty Detection:** Compares accumulated energy to quantized ROM weights to classify patterns as "Novel."
+
