@@ -41,9 +41,28 @@ The **novelty predicate** determines system output:
 
 ---
 
-# Hardware vs. Software Performance
+# Novelty Detection System: Experimental Analysis
 
-- **Zero-Latency Compute:** FPGA achieves ~37.037 ns per clock cycle, effectively zero latency.  
-- **Absolute Determinism:** 100% determinism with jitter < 0.5 µs; software is OS-dependent and non-deterministic.  
-- **I/O-Bound:** UART transport (~86.8 µs) is the bottleneck, not computation.  
+Based on the experimental data and source code provided, the following conclusions can be drawn regarding the novelty detection system implemented on FPGA hardware.
 
+## 1. Architectural Determinism
+
+- **Hardware Superiority:** The FPGA implementation provides deterministic latency, ensuring consistent processing times.  
+- **Jitter Reduction:** Hardware execution eliminates the unpredictable timing variability found in software, maintaining jitter levels below the measurable threshold.  
+- **Silicon Efficiency:** Compute time on the silicon is effectively negligible when compared to data transport overhead.  
+
+## 2. Algorithmic Performance
+
+- **Functional Parity:** The "Software Mirror" accumulator validates that the Verilog "Silicon" logic is mathematically accurate.  
+- **Neuromorphic Success:** The **Leaky Integrator Neuron** model accurately accumulates input "energy" and decays over time, maintaining temporal relevance.  
+- **Novelty Discrimination:** The system effectively distinguishes between normal patterns (alphanumeric) and novel events (symbols), as evidenced by energy spikes and subsequent gating behavior.  
+
+## 3. System Constraints
+
+- **I/O-Bound Limitation:** The primary system bottleneck is UART transport delay, not the processing capabilities of the FPGA or CPU.  
+- **Overflow Stability:** Bit-shifting (`>> 1`) for the "leak" and software-side safety caps maintain accumulator stability over 1,000+ testing rounds.  
+
+## 4. Experimental Validity
+
+- **Reproducibility:** Fixed seeds (`SEED = 42`) and deterministic anomaly windows ensure experiments are scientifically repeatable.  
+- **Physical Feedback:** Onboard LEDs successfully triggered based on energy thresholds, confirming the novelty gating logic operates as intended in hardware.
