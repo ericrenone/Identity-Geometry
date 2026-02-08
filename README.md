@@ -148,9 +148,9 @@ To be scientifically rigorous, there are a few things this current version doesn
 
 ## Summary
 
-This project establishes a **new computational category**:
+This project establishes:
 
-> *Deterministic, ultra-minimalist neuromorphic primitives for real-time novelty detection on ultra-low-cost FPGA hardware.*
+*Deterministic, ultra-minimalist neuromorphic primitives for real-time novelty detection on ultra-low-cost FPGA hardware.*
 
 It trades model depth and learning for **predictable timing, energy efficiency, and minimal resource usage**, filling a gap **not addressed in current SOTA FPGA or Raspberry Pi-based anomaly systems**.
 
