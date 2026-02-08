@@ -37,6 +37,8 @@ $$
 - **Energy efficiency:** $\rho = 3.24 \text{ nJ/bit}$, ~2,265× better than x86_64 CPU baseline
 - **Formal Logic:** FSM with $|Q|=2^{16}$, Lambda Calculus verified, 1D Cellular Automaton behavior
 
+---
+
 ## 1. Overview
 
 A **minimalist, hardware-accelerated leaky integrator neuron** implemented on the **Gowin Tang Nano 9K FPGA**. This project is designed for **real-time novelty detection** with **deterministic timing** and **ultra-low resource usage**, specifically targeting **edge-AI applications** where power and thermal constraints are critical.
