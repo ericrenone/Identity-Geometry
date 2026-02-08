@@ -150,7 +150,9 @@ To be scientifically rigorous, there are a few things this current version doesn
 
 This project establishes:
 
-*Deterministic, ultra-minimalist neuromorphic primitives for real-time novelty detection on ultra-low-cost FPGA hardware.*
+## *Deterministic, ultra-minimalist neuromorphic primitives for real-time novelty detection on ultra-low-cost FPGA hardware.*
+
+## *16-bit fixed-point logic is sufficient for effective bio-inspired dynamics, providing a specialized tool for real-time edge novelty filtering that complex, power-hungry systems do not address.*
 
 It trades model depth and learning for **predictable timing, energy efficiency, and minimal resource usage**, filling a gap **not addressed in current SOTA FPGA or Raspberry Pi-based anomaly systems**.
 
