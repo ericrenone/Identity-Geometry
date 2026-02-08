@@ -5,8 +5,11 @@
 **This is likely the world’s most resource-efficient FPGA novelty detector implemented on <$10 hardware, prioritizing deterministic sub-microsecond operation and ultra-low power over model depth.**
 
 ✅ A single minimalist neuron primitive
+
 ✅ No learned weights or network graph
-✅ Deterministic timing guarantees (a new metric)
+
+✅ Deterministic timing guarantees
+
 ✅ Hardware‑software hybrid for edge systems
 
 ---
