@@ -95,3 +95,6 @@ To be scientifically rigorous, there are a few things this current version doesn
 ```bash
 pip install pyserial psutil matplotlib numpy
 python Power_Metrics_Test.py
+
+<img width="1360" height="1556" alt="test" src="https://github.com/user-attachments/assets/d7fb13d1-b890-4982-9181-6b5bc74fb812" />
+
