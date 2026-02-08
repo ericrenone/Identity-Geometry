@@ -83,4 +83,6 @@ The project utilizes a **5x5x5 Burst Mode** (5 Seeds × 5 Parallel Instances × 
 2. Connect via USB (ensure your port is set to `COM6` or update the Python script).
 3. Run Python: Power Metrics Test.py
 
+<img width="1360" height="1556" alt="test" src="https://github.com/user-attachments/assets/6590f7df-8d7c-4aab-a058-5f73bbcbbd23" />
+
 
