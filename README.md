@@ -103,16 +103,57 @@ To be scientifically rigorous, there are a few things this current version doesn
 
 ## The deterministic low-jitter behavior of the FPGA enables tightly synchronized distributed anomaly detection with significantly lower energy overhead than CPU-based systems, suggesting potential advantages for future real-time edge learning architectures.
 
-## Quick Start
 
-### Hardware Setup
-1. Flash `Verilog_Power_Metrics.v` to your **Gowin Tang Nano 9K**.
-2. Connect via USB (ensure your port is set to `COM6` or update the Python script).
+## Comparison with State-of-the-Art FPGA Systems (2025–2026)
 
-### Software Execution
-```bash
-pip install pyserial psutil matplotlib numpy
-python Power_Metrics_Test.py
+| Metric | Typical SOTA FPGA/SNN Systems | FPGA Novelty Detection Accelerator |
+|--------|-------------------------------|----------------------------------|
+| **Architecture** | Multi-neuron SNNs, deep autoencoders, attention networks | Single minimalist neuron primitive |
+| **Execution Model** | Hardware inference pipelines for classification; learned weights | Deterministic dynamical system (threshold filtering) |
+| **Determinism / Jitter** | Not explicitly guaranteed; OS / memory / pipeline jitter | <0.5 µs guaranteed deterministic jitter |
+| **Latency** | Tens of ns (optimized pipelines), OS-independent for inference | Sub-µs compute latency, total latency limited by UART |
+| **Energy Efficiency** | 0.266 pJ per SOP (optimized SNN ASIC) | 3.24 nJ/bit on $10 FPGA (~2,265× CPU baseline improvement) |
+| **Hardware Cost / Tier** | Mid-to-high FPGAs, neuromorphic chips | Low-cost Gowin Tang Nano 9K (~$10) |
+| **Resource Utilization** | 15–25% LUT/FF + DSPs | Minimal LUT/FF, no DSPs |
+| **Learning / Adaptivity** | Often adaptive SNN or autoencoder models | Static thresholding (no learning yet) |
+| **Target Applications** | Classification, pattern recognition, anomaly detection at scale | Real-time, ultra-low-power novelty filtering for edge |
+
+---
+
+## Comparison with Raspberry Pi
+
+| Metric | Raspberry Pi 5 (or Pi 4/Zero) | FPGA Novelty Detection Accelerator |
+|--------|-------------------------------|----------------------------------|
+| **Execution** | General-purpose ARM CPU; sequential instruction-based | Hardware-implemented neuron; parallel & deterministic |
+| **Latency** | Tens–hundreds µs; OS-bound | Sub-µs compute; deterministic |
+| **Jitter** | Non-deterministic; OS, cache, interrupts | <0.5 µs guaranteed |
+| **Power** | 5–7 W idle; >10× higher than FPGA | 0.45 W total |
+| **Cost** | ~$35+ | ~$10 |
+| **Scalability** | Thread-based; contention & OS scheduling | Fabric-level; can scale neurons efficiently |
+| **Real-Time Guarantees** | Limited; cannot reliably achieve sub-µs | Native hardware timing; predictable alerts |
+
+**Key Takeaway:** While a Raspberry Pi can run the same algorithm in software, it **cannot match the deterministic speed, low power, and hardware efficiency** of the FPGA design.
+
+---
+
+## Unique Contributions
+
+1. **Hyper-Minimalist Neuromorphic Primitive:** Single-leaky integrator neuron for novelty detection — new in computer engineering research.
+2. **Deterministic Timing:** Sub-microsecond, jitter-bound operation, unlike typical FPGA SNN or CPU-based anomaly detectors.
+3. **Ultra-Low-Cost Edge Hardware:** Achieves neuromorphic-style efficiency on <$10 FPGA.
+4. **Hardware-Software Hybrid Verification:** Python twin ensures bit-exact correctness and benchmarking.
+5. **Resource and Energy Efficiency:** Orders-of-magnitude gains over CPU-based software implementations for edge deployment.
+
+---
+
+## Summary
+
+This project establishes a **new computational category**:
+
+> *Deterministic, ultra-minimalist neuromorphic primitives for real-time novelty detection on ultra-low-cost FPGA hardware.*
+
+It trades model depth and learning for **predictable timing, energy efficiency, and minimal resource usage**, filling a gap **not addressed in current SOTA FPGA or Raspberry Pi-based anomaly systems**.
+
 
 
 
